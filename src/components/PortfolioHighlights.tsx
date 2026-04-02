@@ -8,9 +8,6 @@ const FEATURED_PROJECTS = [
     headline: 'AI Text to Music Generator',
     description:
       'Type anything, get a full track back. India\'s first AI text-to-music generator built for creators.',
-    linkLabel: 'Visit site',
-    linkTarget: 'https://444radio.co.in',
-    linkText: '444radio.co.in',
     image: '/2.webp',
   },
   {
@@ -219,18 +216,20 @@ interface FeaturedProject {
   tag: string;
   headline: string;
   description: string;
-  linkLabel: string;
-  linkTarget: string;
-  linkText: string;
+  linkLabel?: string;
+  linkTarget?: string;
+  linkText?: string;
   image: string;
 }
 
 function FeaturedBlock({ project, index }: { project: FeaturedProject; index: number }) {
+  const Wrapper = project.linkTarget ? 'a' : 'div';
+  const aProps = project.linkTarget ? { href: project.linkTarget, target: '_blank', rel: 'noopener noreferrer' } : {};
+
   return (
-    <a
-      href={project.linkTarget}
-      target="_blank"
-      rel="noopener noreferrer"
+    // @ts-ignore
+    <Wrapper
+      {...aProps}
       className={`reveal reveal-delay-${index + 1}`}
       style={{
         display: 'block',
@@ -326,31 +325,33 @@ function FeaturedBlock({ project, index }: { project: FeaturedProject; index: nu
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span
-              style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                color: '#88FF00',
-                letterSpacing: '-0.01em',
-              }}
-            >
-              {project.linkLabel}
-            </span>
-            <ExternalLink size={12} color="#88FF00" />
-            <span
-              style={{
-                fontSize: '12px',
-                color: 'rgba(255,255,255,0.25)',
-                marginLeft: '4px',
-              }}
-            >
-              {project.linkText}
-            </span>
-          </div>
+          {project.linkLabel && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span
+                style={{
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#88FF00',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                {project.linkLabel}
+              </span>
+              <ExternalLink size={12} color="#88FF00" />
+              <span
+                style={{
+                  fontSize: '12px',
+                  color: 'rgba(255,255,255,0.25)',
+                  marginLeft: '4px',
+                }}
+              >
+                {project.linkText}
+              </span>
+            </div>
+          )}
         </div>
       </div>
-    </a>
+    </Wrapper>
   );
 }
 
