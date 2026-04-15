@@ -9,9 +9,19 @@ const FEATURED_PROJECTS = [
     description:
       'Type anything, get a full track back. India\'s first AI text-to-music generator built for creators.',
     linkLabel: 'Visit site',
-    linkTarget: 'https://444radio.co.in',
+    linkTarget: 'http://444radio.co.in/',
     linkText: '444radio.co.in',
     image: '/2.webp',
+  },
+  {
+    tag: 'AI / FILMMAKING',
+    headline: 'AI Filmmaking Tool',
+    description:
+      'Generate, render, fuse, and edit AI-powered films. A complete filmmaking platform with 90+ AI models, 4K generation, and a built-in creative suite.',
+    linkLabel: 'Visit site',
+    linkTarget: 'https://www.thesocialtwin.com/',
+    linkText: 'thesocialtwin.com',
+    image: '/4.webp',
   },
   {
     tag: 'MOBILITY / SaaS',
