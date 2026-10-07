@@ -6,7 +6,7 @@ import SectionBadge from './ui/SectionBadge';
 // ─── EDIT TOOL LIST HERE ───────────────────────────────────────────────────
 // Only tools actually in use. Names are plain text: no third-party logos.
 const TOOLS: { name: string; maker?: string; icon: LucideIcon }[] = [
-  { name: 'Claude API', maker: 'Anthropic', icon: Bot },
+  { name: 'Claude API', maker: 'Anthropic (integrating)', icon: Bot },
   { name: 'Claude Code', maker: 'Anthropic', icon: Terminal },
   { name: 'Gemini', maker: 'Google', icon: Sparkles },
   { name: 'Python audio/video tooling', icon: AudioWaveform },
