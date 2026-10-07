@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Zap } from 'lucide-react';
+import { COMPANY_DESCRIPTION } from '../site';
 
-const text =
-  'Harry Singh IT Services builds high-performance websites, SaaS platforms, and AI tools for real business results. We focus on delivering scalable solutions that drive growth and efficiency.';
+const text = COMPANY_DESCRIPTION;
 
 const words = text.split(' ');
 
@@ -62,7 +62,7 @@ export default function Quote() {
             <Zap className="w-5 h-5 text-black fill-black" />
           </div>
           <p className="text-white text-sm font-medium">
-            About us
+            The company
           </p>
         </div>
 
@@ -78,13 +78,13 @@ export default function Quote() {
               href="#contact"
               className="btn-gradient inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm"
             >
-              Start a Project
+              Contact
             </a>
             <a
-              href="#services"
+              href="#about"
               className="btn-outline inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white"
             >
-              Explore Services
+              About the founder
             </a>
           </div>
         </div>

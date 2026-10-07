@@ -2,19 +2,42 @@ import { ExternalLink, Sparkles } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 // ─── EDIT FEATURED PROJECTS HERE ───────────────────────────────────────────
-const FEATURED_PROJECTS = [
+// Descriptions use each product's own public wording. Don't add claims about a
+// client's product that aren't on that product's own site.
+//
+// `relationship` says how we were involved. While it's null, the label shows
+// as a TODO in `npm run dev` and is left off the live build.
+type Relationship = 'Client project' | 'Our product' | 'Contributed to';
+
+const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     tag: 'AI / MUSIC',
-    headline: 'AI Text to Music Generator',
+    headline: '444Radio',
     description:
-      'Type anything, get a full track back. India\'s first AI text-to-music generator built for creators.',
+      'An AI music creation platform made in India. Create songs, beats, and instrumentals from a text prompt.',
+    relationship: 'Contributed to',
+    linkLabel: 'Visit site',
+    linkTarget: 'https://444radio.co.in/',
+    linkText: '444radio.co.in',
     image: '/2.webp',
   },
   {
-    tag: 'MOBILITY / SaaS',
-    headline: 'Electric Bike Sharing Platform',
+    tag: 'AI / CREATIVE STUDIO',
+    headline: 'The Social Twin',
     description:
-      'A white‑label app for shared electric bikes and e‑scooters, built for urban mobility startups and city‑wide fleets.',
+      '“One Twin. Every creative job.” An AI creative studio with 40+ AI models that keeps the brief, media, documents, and output together.',
+    relationship: 'Contributed to',
+    linkLabel: 'Visit site',
+    linkTarget: 'https://www.thesocialtwin.com/',
+    linkText: 'thesocialtwin.com',
+    image: '/4.webp',
+  },
+  {
+    tag: 'MOBILITY',
+    headline: 'Tilt',
+    description:
+      "India's bikeshare for campuses. An app for renting shared bicycles and e-cycles.",
+    relationship: 'Contributed to',
     linkLabel: 'View app',
     linkTarget: 'https://apps.apple.com/in/app/tilt-shared-bikes-e-bikes/id6446827177',
     linkText: 'App Store ↗',
@@ -134,7 +157,7 @@ export default function PortfolioHighlights() {
                 textTransform: 'uppercase',
               }}
             >
-              Portfolio Highlights
+              Selected work
             </span>
           </div>
 
@@ -150,7 +173,7 @@ export default function PortfolioHighlights() {
               maxWidth: '680px',
             }}
           >
-            Selected work that speaks for itself.
+            Products we've worked on.
           </h2>
 
           <p
@@ -163,7 +186,7 @@ export default function PortfolioHighlights() {
               maxWidth: '440px',
             }}
           >
-            A mix of platforms, products, and digital experiences built to perform in the real world.
+            Web and app projects we've built or contributed to. Each product belongs to its owner.
           </p>
         </div>
 
@@ -214,22 +237,21 @@ export default function PortfolioHighlights() {
 
 interface FeaturedProject {
   tag: string;
+  relationship: Relationship | null;
   headline: string;
   description: string;
-  linkLabel?: string;
-  linkTarget?: string;
-  linkText?: string;
+  linkLabel: string;
+  linkTarget: string;
+  linkText: string;
   image: string;
 }
 
 function FeaturedBlock({ project, index }: { project: FeaturedProject; index: number }) {
-  const Wrapper = project.linkTarget ? 'a' : 'div';
-  const aProps = project.linkTarget ? { href: project.linkTarget, target: '_blank', rel: 'noopener noreferrer' } : {};
-
   return (
-    // @ts-ignore
-    <Wrapper
-      {...aProps}
+    <a
+      href={project.linkTarget}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`reveal reveal-delay-${index + 1}`}
       style={{
         display: 'block',
@@ -298,6 +320,25 @@ function FeaturedBlock({ project, index }: { project: FeaturedProject; index: nu
             >
               {project.tag}
             </span>
+            {(project.relationship || import.meta.env.DEV) && (
+              <span
+                style={{
+                  display: 'inline-block',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  color: project.relationship ? 'rgba(255,255,255,0.6)' : '#ff6b6b',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  border: `1px solid ${project.relationship ? 'rgba(255,255,255,0.15)' : 'rgba(255,107,107,0.5)'}`,
+                  borderRadius: '999px',
+                  padding: '3px 10px',
+                  marginBottom: '18px',
+                  marginLeft: '8px',
+                }}
+              >
+                {project.relationship ?? 'TODO: set relationship'}
+              </span>
+            )}
 
             <h3
               style={{
@@ -325,33 +366,31 @@ function FeaturedBlock({ project, index }: { project: FeaturedProject; index: nu
             </p>
           </div>
 
-          {project.linkLabel && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: '#88FF00',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                {project.linkLabel}
-              </span>
-              <ExternalLink size={12} color="#88FF00" />
-              <span
-                style={{
-                  fontSize: '12px',
-                  color: 'rgba(255,255,255,0.25)',
-                  marginLeft: '4px',
-                }}
-              >
-                {project.linkText}
-              </span>
-            </div>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span
+              style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#88FF00',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              {project.linkLabel}
+            </span>
+            <ExternalLink size={12} color="#88FF00" />
+            <span
+              style={{
+                fontSize: '12px',
+                color: 'rgba(255,255,255,0.25)',
+                marginLeft: '4px',
+              }}
+            >
+              {project.linkText}
+            </span>
+          </div>
         </div>
       </div>
-    </Wrapper>
+    </a>
   );
 }
 
@@ -403,4 +442,4 @@ function StripCard({ item }: { item: StripItem }) {
       />
     </div>
   );
-}
+}

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { PRODUCT_NAME, SITE } from '../site';
 
+// Root-relative so the same links work from /privacy and /terms.
 const links = [
-  { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
-  { label: 'About', href: '#whyus' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Product', href: '/#product' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'Services', href: '/#services' },
+  { label: 'About', href: '/#about' },
 ];
 
 export default function Navbar() {
@@ -25,23 +27,24 @@ export default function Navbar() {
     }`}>
       {announcementVisible && (
         <div className="bg-[#88FF00] text-black text-sm font-semibold py-2.5 px-4 flex items-center justify-center gap-2 relative">
-          {/* Left Side: Contact Info (Hidden on mobile) */}
-          <div className="absolute left-4 lg:left-8 hidden md:flex items-center gap-3 border border-black/30 rounded-md px-2.5 py-1">
-            <a href="tel:+919619377397" className="hover:opacity-70 transition-opacity">+91 96193 77397</a>
-            <span className="opacity-20 translate-y-[-1px]">|</span>
-            <a href="mailto:contact@harrysinghitservices.com" className="hover:opacity-70 transition-opacity">contact@harrysinghitservices.com</a>
+          {/* Left Side: Email (desktop only) */}
+          <div className="absolute left-4 lg:left-8 hidden xl:flex items-center border border-black/30 rounded-md px-2.5 py-1">
+            <a href={`mailto:${SITE.email}`} className="hover:opacity-70 transition-opacity">{SITE.email}</a>
           </div>
 
-          <span>Get a Free Project Consultation</span>
+          <span className="truncate pr-6 md:pr-0">
+            {PRODUCT_NAME} is in development
+            <span className="hidden md:inline">. Give your AI artist a face and a world.</span>
+          </span>
           <a
-            href="#contact"
-            className="inline-flex items-center gap-1 font-bold underline underline-offset-2 hover:no-underline"
+            href="/#how-it-works"
+            className="hidden sm:inline-flex items-center gap-1 font-bold underline underline-offset-2 hover:no-underline shrink-0"
           >
-            Book Now <ArrowRight size={13} />
+            See how it works <ArrowRight size={13} />
           </a>
 
-          {/* Right Side: Location (Hidden on mobile) */}
-          <div className="absolute right-12 lg:right-16 hidden md:block border border-black/30 rounded-md px-2.5 py-1">
+          {/* Right Side: Location (desktop only) */}
+          <div className="absolute right-12 lg:right-16 hidden xl:block border border-black/30 rounded-md px-2.5 py-1">
             Mumbai, IN
           </div>
 
@@ -67,15 +70,15 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-[68px]">
-            <a href="#" className="flex items-center">
+            <a href="/" className="flex items-center">
               <img
                 src="/LOGO_Transparent_BG.png"
-                alt="Harry Singh IT Services"
+                alt={SITE.company}
                 className="h-10 w-auto object-contain"
               />
             </a>
 
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-8">
               {links.map((l) => (
                 <a
                   key={l.label}
@@ -87,18 +90,18 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <div className="hidden md:flex items-center">
+            <div className="hidden lg:flex items-center">
               <a
-                href="#contact"
+                href="/#contact"
                 className="navbar-cta inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-bold text-black"
               >
-                Get a Quote
+                Contact
                 <ArrowRight size={13} className="navbar-cta-arrow" />
               </a>
             </div>
 
             <button
-              className="md:hidden text-white/70 hover:text-white p-1"
+              className="lg:hidden text-white/70 hover:text-white p-1"
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
             >
@@ -108,7 +111,7 @@ export default function Navbar() {
         </div>
 
         {open && (
-          <div className={`md:hidden ${announcementVisible ? 'bg-black' : 'bg-black/20'} border-t border-white/[0.06]`}>
+          <div className={`lg:hidden ${announcementVisible ? 'bg-black' : 'bg-black/20'} border-t border-white/[0.06]`}>
             <div className="px-6 py-5 flex flex-col gap-5">
               {links.map((l) => (
                 <a
@@ -121,11 +124,11 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 className="navbar-cta inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-full text-sm font-bold text-black text-center mt-1"
                 onClick={() => setOpen(false)}
               >
-                Get a Quote
+                Contact
                 <ArrowRight size={13} className="navbar-cta-arrow" />
               </a>
             </div>

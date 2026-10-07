@@ -1,15 +1,12 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import TrustStrip from './components/TrustStrip';
+import HowItWorks from './components/HowItWorks';
+import BuiltWith from './components/BuiltWith';
 import Quote from './components/Quote';
-import WhyUs from './components/WhyUs';
 import WhatWeDo from './components/WhatWeDo';
-import HowWeDoIt from './components/HowWeDoIt';
-import GlobalReach from './components/GlobalReach';
-import FAQSection from './components/FAQSection';
 import PortfolioHighlights from './components/PortfolioHighlights';
+import About from './components/About';
 import ContactForm from './components/ContactForm';
-import CTA from './components/CTA';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -18,16 +15,13 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <TrustStrip />
+        <HowItWorks />
+        <BuiltWith />
         <Quote />
-        <WhyUs />
         <WhatWeDo />
-        <HowWeDoIt />
         <PortfolioHighlights />
-        <GlobalReach />
-        <FAQSection />
+        <About />
         <ContactForm />
-        <CTA />
       </main>
       <Footer />
     </div>

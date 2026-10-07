@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, MessageSquare, Mail, Phone, MapPin } from 'lucide-react';
+import { PRODUCT_NAME, SITE } from '../site';
 
 interface FormData {
   firstName: string;
@@ -18,13 +19,18 @@ interface FormErrors {
   message?: string;
 }
 
-const SERVICES = [
-  'Website Development',
-  'SaaS Product',
-  'AI Tool',
-  'Mobile App',
-  'E-commerce',
-  'UI/UX Design',
+// Sent to the n8n webhook in the `service` field.
+const TOPICS = [
+  `${PRODUCT_NAME} / partnership`,
+  'Custom web development',
+  'n8n workflow automation',
+  'Something else',
+];
+
+const DIRECT = [
+  { icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` },
+  { icon: Phone, label: SITE.phone, href: SITE.phoneHref },
+  { icon: MapPin, label: SITE.location, href: undefined },
 ];
 
 const STORAGE_KEY = 'formSubmitted';
@@ -87,17 +93,18 @@ export default function ContactForm() {
         message: formData.message,
       };
 
-      await fetch('https://app.10xspeed.in/webhook/harry-singh-it-services-free-quote', {
+      const res = await fetch('https://app.10xspeed.in/webhook/harry-singh-it-services-free-quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+      if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
 
       localStorage.setItem(STORAGE_KEY, 'true');
       setSubmitted(true);
     } catch (error) {
       console.error('Form submission failed:', error);
-      alert('Something went wrong. Please try again.');
+      alert(`Something went wrong. Please try again, or email ${SITE.email}.`);
     } finally {
       setLoading(false);
     }
@@ -129,7 +136,7 @@ export default function ContactForm() {
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-12 md:py-16">
         <div
-          className="relative max-w-4xl mx-auto rounded-3xl p-10 md:p-20 shadow-2xl"
+          className="relative max-w-4xl mx-auto rounded-3xl p-6 sm:p-10 md:p-16 shadow-2xl"
           style={{
             border: '1px solid rgba(255,255,255,0.08)',
             background: 'rgba(255,255,255,0.02)',
@@ -162,13 +169,13 @@ export default function ContactForm() {
                 Thanks!
               </h2>
               <p className="text-white/40 text-base mb-8 max-w-sm">
-                Your quote request is in. We'll get back to you within 24 hours.
+                Your message is in. We'll reply by email.
               </p>
               <button
                 onClick={handleReset}
                 className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 underline underline-offset-4"
               >
-                Submit another request
+                Send another message
               </button>
             </div>
           ) : (
@@ -198,18 +205,34 @@ export default function ContactForm() {
                     <MessageSquare size={11} color="#000000" strokeWidth={2.5} />
                   </div>
                   <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                    Get Quote
+                    Contact
                   </span>
                 </div>
                 <h2
                   className="font-bold text-white mb-4 leading-tight"
-                  style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
+                  style={{ fontSize: 'clamp(2.25rem, 5vw, 4rem)' }}
                 >
-                  Start Your Project
+                  Get in touch
                 </h2>
-                <p className="text-white/40 text-[15px] max-w-lg">
-                  Currently accepting new projects. Get your free quote today.
+                <p className="text-white/40 text-[15px] max-w-lg mb-8">
+                  Questions about {PRODUCT_NAME}, a partnership, or a client project? Send a message
+                  or reach us directly.
                 </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {DIRECT.map(({ icon: Icon, label, href }, i) => {
+                    const Tag = href ? 'a' : 'div';
+                    return (
+                      <Tag
+                        key={label}
+                        {...(href ? { href } : {})}
+                        className={`${i === 0 ? 'sm:col-span-2 ' : ''}rounded-xl px-4 py-3 flex items-center gap-3 min-w-0 border border-white/[0.08] bg-white/[0.03] text-white/60 hover:text-white/80 transition-colors`}
+                      >
+                        <Icon size={16} className="shrink-0 text-[#88FF00]" />
+                        <span className="text-sm [overflow-wrap:anywhere]">{label}</span>
+                      </Tag>
+                    );
+                  })}
+                </div>
               </div>
 
               <form onSubmit={handleSubmit} noValidate>
@@ -263,12 +286,12 @@ export default function ContactForm() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="Optional"
                       className={inputBase}
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className={labelBase}>Service *</label>
+                    <label className={labelBase}>Topic *</label>
                     <div className="relative">
                       <select
                         name="service"
@@ -278,9 +301,9 @@ export default function ContactForm() {
                           }`}
                       >
                         <option value="" disabled className="bg-[#111] text-white/50">
-                          Select a service...
+                          Select a topic...
                         </option>
-                        {SERVICES.map((s) => (
+                        {TOPICS.map((s) => (
                           <option key={s} value={s} className="bg-[#111] text-white">
                             {s}
                           </option>
@@ -309,7 +332,7 @@ export default function ContactForm() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={6}
-                      placeholder="Tell us about your project, goals, and timeline..."
+                      placeholder="Tell us what you have in mind..."
                       className={`${inputBase} resize-none`}
                     />
                     {errors.message && (
@@ -318,7 +341,7 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                <div className="flex justify-start mt-8">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-8">
                   <button
                     type="submit"
                     disabled={loading}
@@ -351,6 +374,13 @@ export default function ContactForm() {
                       </>
                     )}
                   </button>
+                  <p className="text-xs text-white/35 m-0">
+                    By sending this form you agree to our{' '}
+                    <a href="/privacy" className="underline underline-offset-2 hover:text-white/60">
+                      Privacy Policy
+                    </a>
+                    .
+                  </p>
                 </div>
               </form>
             </>

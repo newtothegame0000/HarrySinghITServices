@@ -1,19 +1,18 @@
 import { ArrowUpRight } from 'lucide-react';
+import { COMPANY_DESCRIPTION, SITE } from '../site';
 
+// Root-relative so the footer works the same on every page.
 const links = {
-  Services: [
-    { name: 'Websites & Web Apps', href: '#services-0' },
-    { name: 'SaaS Products', href: '#services-1' },
-    { name: 'AI Automations', href: '#services-2' },
-    { name: 'Mobile Apps', href: '#services-3' },
-    { name: 'E-Commerce', href: '#services-4' },
-    { name: 'UI/UX Design', href: '#services-5' },
-  ],
   Company: [
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'About', href: '#whyus' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Product', href: '/#product' },
+    { name: 'How it works', href: '/#how-it-works' },
+    { name: 'Services', href: '/#services' },
+    { name: 'About', href: '/#about' },
+    { name: 'Contact', href: '/#contact' },
+  ],
+  Legal: [
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Use', href: '/terms' },
   ],
 };
 
@@ -21,13 +20,20 @@ export default function Footer() {
   return (
     <footer className="bg-[#060606] border-t border-white/[0.06] py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-            <div className="md:col-span-2">
-              <a href="#" className="flex items-center mb-4">
-                <img src="/LOGO_Transparent_BG.png" alt="Harry Singh IT Services" className="h-12 w-auto object-contain" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+            <div className="col-span-2">
+              <a href="/" className="flex items-center mb-4">
+                <img src="/LOGO_Transparent_BG.png" alt={SITE.company} className="h-12 w-auto object-contain" />
               </a>
-              <p className="text-white/35 text-sm leading-relaxed max-w-xs">
-                Websites, apps, and AI solutions built for real business results. Your digital partner for growth.
+              <p className="text-white/35 text-sm leading-relaxed max-w-sm mb-4">
+                {COMPANY_DESCRIPTION}
+              </p>
+              <p className="text-white/35 text-sm leading-relaxed">
+                {SITE.location} · Founded {SITE.foundedYear}
+                <br />
+                <a href={`mailto:${SITE.email}`} className="hover:text-white/70 transition-colors">
+                  {SITE.email}
+                </a>
               </p>
             </div>
 
@@ -52,13 +58,13 @@ export default function Footer() {
           </div>
 
           <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-white/20 text-xs">
-              &copy; {new Date().getFullYear()} Harry Singh IT Services. All rights reserved.
+            <p className="text-white/20 text-xs text-center sm:text-left">
+              &copy; {new Date().getFullYear()} {SITE.company}. {SITE.location}. Founded {SITE.foundedYear}.
             </p>
             <div className="flex items-center gap-6">
-              {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((item) => (
-                <a key={item} href="#" className="text-white/20 text-xs hover:text-white/50 transition-colors">
-                  {item}
+              {links.Legal.map((item) => (
+                <a key={item.name} href={item.href} className="text-white/20 text-xs hover:text-white/50 transition-colors">
+                  {item.name}
                 </a>
               ))}
             </div>

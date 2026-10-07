@@ -1,48 +1,22 @@
 import { useState, useEffect } from 'react';
 import { BadgeCheck, ArrowRight } from 'lucide-react';
+import { PRODUCT_NAME } from '../site';
 
+// ─── EDIT CLIENT SERVICES HERE ─────────────────────────────────────────────
 const SERVICES = [
   {
     id: '01',
-    title: 'Websites & Web Apps',
-    description: 'Fast, modern sites built for performance, SEO, and conversion. Every detail considered.',
+    title: 'Custom Web Development',
+    description: 'Websites and web apps built with React and Vite, for speed, SEO and mobile.',
     image: '/services/WhatWeDo1.webp',
-    detail: 'Fast, modern sites built for performance, SEO, and conversion. Every detail considered.',
+    detail: 'Websites and web apps built with React and Vite, designed and developed for speed, SEO and every screen size.',
   },
   {
     id: '02',
-    title: 'SaaS Products',
-    description: 'End-to-end platforms, including auth, billing, dashboards, and APIs. Built to launch and scale.',
-    image: '/services/WhatWeDo2.webp',
-    detail: 'End-to-end platforms, including auth, billing, dashboards, and APIs. Built to launch and scale.',
-  },
-  {
-    id: '03',
-    title: 'AI Automations',
-    description: 'Custom AI workflows and internal tools that remove friction and improve how teams operate.',
+    title: 'n8n Workflow Automation',
+    description: 'Custom n8n workflows that connect your tools and automate repetitive work.',
     image: '/services/WhatWeDo3.webp',
-    detail: 'Custom AI workflows and internal tools that remove friction and improve how teams operate.',
-  },
-  {
-    id: '04',
-    title: 'Mobile Apps',
-    description: 'iOS and Android apps built for real users. Clean, performant, and production-ready.',
-    image: '/services/WhatWeDo4.webp',
-    detail: 'iOS and Android apps built for real users. Clean, performant, and production-ready.',
-  },
-  {
-    id: '05',
-    title: 'E-Commerce',
-    description: 'Online stores built to sell, with fast checkout, product management, and global payments.',
-    image: '/services/WhatWeDo5.webp',
-    detail: 'Online stores built to sell, with fast checkout, product management, and global payments.',
-  },
-  {
-    id: '06',
-    title: 'UI/UX Design',
-    description: 'Considered interfaces designed in Figma. From concept to pixel-perfect handoff.',
-    image: '/services/WhatWeDo6.webp',
-    detail: 'Considered interfaces designed in Figma. From concept to pixel-perfect handoff.',
+    detail: 'Custom n8n workflows that connect the tools a business already uses, automate repetitive work, and add AI steps where they help.',
   },
 ];
 
@@ -132,7 +106,7 @@ export default function WhatWeDo() {
               <BadgeCheck size={13} color="#000000" strokeWidth={2.5} />
             </div>
             <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>
-              What we do
+              Services
             </span>
           </div>
 
@@ -146,7 +120,7 @@ export default function WhatWeDo() {
               margin: 0,
               maxWidth: '520px',
             }}>
-              We build things that work.
+              Client work that funds the product.
             </h2>
             <p style={{
               fontSize: '15px',
@@ -156,7 +130,8 @@ export default function WhatWeDo() {
               margin: 0,
               maxWidth: '360px',
             }}>
-              Websites, SaaS platforms, and AI tools designed with precision and built to last.
+              Alongside {PRODUCT_NAME}, we build websites and n8n automations for clients. That
+              revenue funds product development.
             </p>
           </div>
         </div>
@@ -286,7 +261,7 @@ export default function WhatWeDo() {
                   color: 'rgba(136,255,0,0.5)',
                   letterSpacing: '0.14em',
                 }}>
-                  {active.id} / 06
+                  {active.id} / {String(SERVICES.length).padStart(2, '0')}
                 </div>
               </div>
 
